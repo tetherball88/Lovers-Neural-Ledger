@@ -6,7 +6,6 @@
     {% set sameSexEncounter = papyrus_util("GetIntValue", actorUUID, "TTLNLDec_SexualData_SameSexEncounter") %}
     {% set totalEncounters = exclusiveSex + groupSex + soloSex %}
     {% set npcName = decnpc(actorUUID).name %}
-    totalEncounters - {{totalEncounters}}
     {% if totalEncounters > 0 %}
         ### Character Sexual Behavior
         {% set sameSexRatio = sameSexEncounter / totalEncounters %}

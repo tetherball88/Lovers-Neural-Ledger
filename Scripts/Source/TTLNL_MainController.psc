@@ -6,6 +6,12 @@ EndEvent
 
 Function Maintenance()
     RegisterForModEvent("ttll_thread_data_event", "ThreadFinished")
+
+    if(StorageUtil.GetIntValue(none, "TTNLN_Initialized") == 0)
+        TTLNL_Storage.Initialize()
+        StorageUtil.SetIntValue(none, "TTNLN_Initialized", 1)
+        MiscUtil.PrintConsole("TTLNL: Initialized")
+    endif
 EndFunction
 
 Event ThreadFinished(int ThreadID)

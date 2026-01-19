@@ -1,5 +1,24 @@
 Scriptname TTLNL_Storage
 
+Function Initialize() global
+    Actor[] actors = TTLL_Store.GetAllNPCs()
+    int i = 0
+    while(i < actors.Length)
+        UpdateNpcSexualData(actors[i])
+
+        Actor[] lovers = TTLL_Store.GetAllLovers(actors[i])
+        int j = 0
+        while(j < lovers.Length)
+            UpdateNpcLoverSexualData(actors[i], lovers[j])
+            j += 1
+        endwhile
+
+        i += 1
+    endwhile
+
+    MiscUtil.PrintConsole("TTLNL: Storage initialized for " + actors.Length + " NPCs")
+EndFunction
+
 Function UpdateNpcSexualData(Actor npc) global
     int solo = TTLL_Store.GetNpcInt(npc, "solosex")
     StorageUtil.SetIntValue(npc, "TTLNLDec_SexualData_SoloSex", solo)
@@ -42,10 +61,10 @@ Function UpdateNpcLoverSexualData(Actor npc, Actor lover) global
     elseif(score > 5)
         bondLevel = "casual connection"
     endif
-    StorageUtil.SetFloatValue(npc, "TTLNLDec_Lover_" + lover.GetFormID() + "_Bond", TTLL_Store.GetLoverScore(npc, lover))
+    StorageUtil.SetStringValue(npc, "TTLNLDec_Lover_" + lover.GetFormID() + "_Bond", bondLevel)
 
     int exclusive = TTLL_Store.GetLoverInt(npc, lover, "exclusivesex")
-    int group = TTLL_Store.GetLoverInt(npc, lover, "groupsex")
+    int group = TTLL_Store.GetLoverInt(npc, lover, "partOfSameGroupSex")
     StorageUtil.SetIntValue(npc, "TTLNLDec_Lover_" + lover.GetFormID() + "_Exclusive", exclusive)
     StorageUtil.SetIntValue(npc, "TTLNLDec_Lover_" + lover.GetFormID() + "_Group", group)
 EndFunction
